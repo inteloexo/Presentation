@@ -12,9 +12,13 @@ class EntryGui(QtGui.QDialog):
 
     def return_clicked(self):
         text = self.textEdit.toPlainText()
-        if text != '':
+
+        if (text != '') and not(os.path.exists(self.date + '.txt')):
             file = open(self.date + '.txt', 'w')
             file.write(text)
+            file.close()
+            os.system(self.date + '.txt')
+
         self.close()
 
     def initUI(self):
@@ -26,6 +30,7 @@ class EntryGui(QtGui.QDialog):
         if os.path.exists(self.date + '.txt'):
             file = open(self.date + '.txt', 'r')
             self.buffer = file.read()
+            file.close()
 
         self.textEdit = QtGui.QTextEdit()
         self.textEdit.setText(self.buffer)
@@ -41,7 +46,6 @@ class EntryGui(QtGui.QDialog):
         grid.addWidget(returnButton, 4, 0)
 
         self.setLayout(grid)
-
         self.setGeometry(300, 300, 350, 300)
         self.setWindowTitle("Dienoraštis")
         self.show()
@@ -51,7 +55,6 @@ class Gui(QtGui.QDialog):
     
     def __init__(self):
         super(Gui, self).__init__()
-        
         self.initUI()
 
     def popup(self, date):
@@ -72,11 +75,13 @@ class Gui(QtGui.QDialog):
 
         self.setGeometry(300, 300, 230, 220)
         self.setWindowTitle('Dienoraštis')
+        self.setFixedSize(230, 220)
         self.show()
 
 
 def main():
     app = QtGui.QApplication(sys.argv)
+    gui = Gui()
     sys.exit(app.exec_())
 
 
