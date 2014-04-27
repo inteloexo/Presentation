@@ -13,11 +13,9 @@ class EntryGui(QtGui.QDialog):
     def return_clicked(self):
         text = self.textEdit.toPlainText()
 
-        if (text != '') and not(os.path.exists(self.date + '.txt')):
-            file = open(self.date + '.txt', 'w')
-            file.write(text)
-            file.close()
-            os.system(self.date + '.txt')
+        file = open(self.date + '.txt', 'w')
+        file.write(text)
+        file.close()
 
         self.close()
 
